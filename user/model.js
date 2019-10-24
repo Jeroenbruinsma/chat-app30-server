@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../db')
+const  Chatroom = require('../stream/model')
 
 const User = sequelize.define('user', {
   email: {
@@ -10,9 +11,10 @@ const User = sequelize.define('user', {
     type: Sequelize.STRING,
     allowNull: false
   },
-}, {
-  timestamps: false,
-  tableName: 'users'
 })
+
+User.hasMany(Chatroom)
+Chatroom.belongsTo(User)
+
 
 module.exports = User

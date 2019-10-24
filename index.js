@@ -1,11 +1,10 @@
 const express = require("express");
 const Sequelize = require("sequelize");
 const bodyParser = require('body-parser')
-
 const cors = require('cors')
+
 const user = require('./user/router')
 const signup = require('./auth/router')
-const db = require('./db')
 const stream = require('./stream/router')
 
 
@@ -20,11 +19,6 @@ app.use(signup)
 app.use(stream)
 
 app.listen(port, () => console.log("listning on port ", port));
-
-const Chatroom =  db.define('chatroom',{
-    message: Sequelize.STRING,
-    user: Sequelize.STRING
-})
 
 app.get('/', (request, response )=>{
     console.log("got an get request on /")

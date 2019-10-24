@@ -1,16 +1,18 @@
 const {Router} = require("express")
 const Sse = require('json-sse')
 const Chatroom = require('./model')
+const auth = require('../auth/middelware')
 
 const router = new Router()
 const stream = new Sse()
 
-router.post('/message', async(request,response)=>  {
+router.post('/message', auth, async(request,response)=>  {
     console.log('got a request on /message',request.body)
     const {message } = request.body
+    console.log("message from user w id: ", request.user.id )
     const entity = await Chatroom.create({
         message,
-        user: "its me"
+        userId:  request.user.id
     })
 
     const room = await Chatroom.findAll()
